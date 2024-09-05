@@ -5,6 +5,26 @@ import (
 	"github.com/shirou/gopsutil/mem"
 )
 
+type MemoryInfo struct {
+	Total       uint64  `json:"total"`       // 总内存大小
+	Available   uint64  `json:"available"`   // 可用内存大小
+	Used        uint64  `json:"used"`        // 已使用内存大小
+	UsedPercent float64 `json:"usedPercent"` // 已使用内存百分比
+}
+
+// GetNodeMemoryInfo 获取节点内存信息
+func GetNodeMemoryInfo() MemoryInfo {
+	memInfo := MemoryInfo{
+		Total:       getMemoryTotal(),
+		Available:   getMemoryAvailable(),
+		Used:        getMemoryUsed(),
+		UsedPercent: getMemoryUsedPercent(),
+	}
+
+	return memInfo
+}
+
+// 获取内存信息
 func getMemoryInfo() *mem.VirtualMemoryStat {
 	// 获取内存虚拟内存统计信息
 	virtualMemory, err := mem.VirtualMemory()
@@ -17,7 +37,8 @@ func getMemoryInfo() *mem.VirtualMemoryStat {
 	return virtualMemory
 }
 
-func GetMemoryUsedPercent() float64 {
+// 获取已经使用内存百分比
+func getMemoryUsedPercent() float64 {
 	if getMemoryInfo() == nil {
 		return -1
 	} else {
@@ -25,7 +46,8 @@ func GetMemoryUsedPercent() float64 {
 	}
 }
 
-func GetMemoryTotal() uint64 {
+// 获取内存总大小
+func getMemoryTotal() uint64 {
 	if getMemoryInfo() == nil {
 		return 0
 	} else {
@@ -33,7 +55,8 @@ func GetMemoryTotal() uint64 {
 	}
 }
 
-func GetMemoryAvailable() uint64 {
+// 获取内存可用大小
+func getMemoryAvailable() uint64 {
 	if getMemoryInfo() == nil {
 		return 0
 	} else {
@@ -41,7 +64,8 @@ func GetMemoryAvailable() uint64 {
 	}
 }
 
-func GetMemoryUsed() uint64 {
+// 获取内存已用大小
+func getMemoryUsed() uint64 {
 	if getMemoryInfo() == nil {
 		return 0
 	} else {
