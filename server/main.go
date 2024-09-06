@@ -2,10 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
-
-	"github.com/gorilla/websocket"
 )
 
 // WebSocket Upgrader 用来将 HTTP 连接升级为 WebSocket 连接
