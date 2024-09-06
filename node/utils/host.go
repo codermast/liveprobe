@@ -6,6 +6,19 @@ import (
 	"time"
 )
 
+type HostInfo struct {
+	BootDays uint64 `json:"bootDays"` // 运行天数
+}
+
+// GetNodeHostInfo 获取节点 Host 信息
+func GetNodeHostInfo() HostInfo {
+	hostInfo := HostInfo{
+		BootDays: GetHostBootDays(),
+	}
+
+	return hostInfo
+}
+
 // 获取当前服务器的运行时间
 func getHostBootTime() uint64 {
 	bootTime, err := host.BootTime()

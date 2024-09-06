@@ -7,8 +7,10 @@ import (
 
 type NodeInfo struct {
 	NodeId  string     `json:"nodeId"`
+	Host    HostInfo   `json:"host"`
 	CPU     CPUInfo    `json:"cpu"`
 	Memory  MemoryInfo `json:"memory"`
+	Swap    SwapInfo   `json:"swap"`
 	Disk    DiskInfo   `json:"disk"`
 	Network NetInfo    `json:"network"`
 }
@@ -17,8 +19,10 @@ type NodeInfo struct {
 func GetNodeInfo() NodeInfo {
 	nodeInfo := NodeInfo{
 		NodeId:  GetNodeId(),
+		Host:    GetNodeHostInfo(),
 		CPU:     GetNodeCPUInfo(),
 		Memory:  GetNodeMemoryInfo(),
+		Swap:    GetNodeSwapInfo(),
 		Disk:    GetNodeDiskInfoInfo(),
 		Network: GetNodeNetInfo(),
 	}

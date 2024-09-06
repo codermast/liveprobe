@@ -7,10 +7,10 @@ import (
 )
 
 type NetInfo struct {
-	BytesSent     uint64  `json:"bytesSent"`     // 字节发送数 B/s
-	BytesRecv     uint64  `json:"bytesRecv"`     // 字节下载数 B/s
-	PacketsSent   uint64  `json:"packetsSent"`   // 包上传数 个/s
-	PacketsRecv   uint64  `json:"packetsRecv"`   // 包下载数 个/s
+	BytesSent     uint64  `json:"bytesSent"`     // 字节发送数 B
+	BytesRecv     uint64  `json:"bytesRecv"`     // 字节下载数 B
+	PacketsSent   uint64  `json:"packetsSent"`   // 包上传数 个
+	PacketsRecv   uint64  `json:"packetsRecv"`   // 包下载数 个
 	UploadSpeed   float64 `json:"uploadSpeed"`   // 上传速度 B/s
 	DownloadSpeed float64 `json:"downloadSpeed"` // 下载速度 B/s
 }

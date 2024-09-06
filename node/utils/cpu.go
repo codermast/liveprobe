@@ -13,11 +13,11 @@ import (
 )
 
 type CPUInfo struct {
-	ModelName string  `json:"modelName"` // 型号
-	Core      int32   `json:"core"`      // 核心数
-	Mhz       float64 `json:"mhz"`       // 频率
-	CacheSize int32   `json:"cacheSize"` // 缓存大小
-	Percent   float64 `json:"percent"`   // 使用率
+	ModelName   string  `json:"modelName"`   // 型号
+	Core        int32   `json:"core"`        // 核心数
+	Mhz         float64 `json:"mhz"`         // 频率
+	CacheSize   int32   `json:"cacheSize"`   // 缓存大小
+	UsedPercent float64 `json:"usedPercent"` // 使用率
 }
 
 // 这里库提供的获取 CPU 信息的方法只能在 Windows 平台下成功运行，类 Unix 系统自己实现
@@ -25,11 +25,11 @@ type CPUInfo struct {
 // GetNodeCPUInfo 获取节点 CPU 信息
 func GetNodeCPUInfo() CPUInfo {
 	cpuInfo := CPUInfo{
-		ModelName: getCPUModelName(),
-		Core:      getCPUCore(),
-		Mhz:       getCPUMhz(),
-		CacheSize: getCPUCacheSize(),
-		Percent:   getCpuPercent(),
+		ModelName:   getCPUModelName(),
+		Core:        getCPUCore(),
+		Mhz:         getCPUMhz(),
+		CacheSize:   getCPUCacheSize(),
+		UsedPercent: getCpuPercent(),
 	}
 
 	return cpuInfo
