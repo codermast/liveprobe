@@ -42,17 +42,17 @@ func getDiskUsedPercent() float64 {
 
 // getDiskTotalSpace 获取磁盘总空间
 func getDiskTotalSpace() uint64 {
-	return getDiskInfo().Total / (1024 * 1024 * 1024)
+	return getDiskInfo().Total
 }
 
 // getDiskAvailableSpace 获取磁盘可用空间
 func getDiskAvailableSpace() uint64 {
-	return getDiskInfo().Free / 1024 / 1024
+	return getDiskInfo().Free
 }
 
 // getDiskUsedSpace 获取磁盘使用空间
 func getDiskUsedSpace() uint64 {
-	return getDiskInfo().Used / (1024 * 1024 * 1024)
+	return getDiskInfo().Used
 }
 
 // getDiskMountPath 获取磁盘挂载点
