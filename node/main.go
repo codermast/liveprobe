@@ -1,7 +1,7 @@
 package main
 
 import (
-	"LiveProbe/node/utils"
+	"LiveProbe/node/services"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/websocket"
@@ -11,22 +11,23 @@ import (
 
 func main() {
 
-	// TODO WebSocket 服务端地址
-	var wsUrl string
-	fmt.Print("请输入你的WebSocket 服务端地址: ")
-	// 从标准输入读取单个输入
-	fmt.Scanln(&wsUrl)
+	// 1. 获取服务器端地址
+	serverUrl := services.GetNodeServerUrl()
 
-	serverURL := wsUrl
-	//serverURL := "ws://localhost:8080/ws"
+	if serverUrl == "" {
+		fmt.Print("首次运行，请输入您的 WebSocket 服务端地址: ")
+		// 从标准输入读取单个输入
+		fmt.Scanln(&serverUrl)
+		services.SetNodeServerUrl(serverUrl)
+	}
 
 	// 解析 URL
-	u, err := url.Parse(serverURL)
+	u, err := url.Parse(serverUrl)
 	if err != nil {
 		log.Fatal("WebSocket 地址异常:", err)
 	}
 
-	// 创建 WebSocket 连接
+	// 2. 连接 WebSocket 服务端
 	conn, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {
 		log.Fatal("WebSocket 连接异常:", err)
@@ -37,7 +38,7 @@ func main() {
 	defer conn.Close()
 
 	for {
-		nodeInfo := utils.GetNodeInfo()
+		nodeInfo := services.GetNodeInfo()
 
 		// 将系统信息结构体转换为 JSON 格式
 		jsonData, err := json.Marshal(nodeInfo)

@@ -1,4 +1,4 @@
-package utils
+package services
 
 import (
 	"github.com/shirou/gopsutil/disk"
