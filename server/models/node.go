@@ -4,6 +4,7 @@ type NodeInfo struct {
 	NodeId  string     `json:"nodeId"`
 	CPU     CPUInfo    `json:"cpu"`
 	Memory  MemoryInfo `json:"memory"`
+	Swap    SwapInfo   `json:"swap"`
 	Disk    DiskInfo   `json:"disk"`
 	Network NetInfo    `json:"network"`
 }

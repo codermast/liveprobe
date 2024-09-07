@@ -1,18 +1,14 @@
 package services
 
 import (
+	"LiveProbe/server/models"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
 )
 
-type Message struct {
-	MessageType int
-	Data        []byte
-}
-
-var nodeToWebChan = make(chan Message)
+var nodeToWebChan = make(chan models.Message)
 
 // WebSocket Upgrader 用来将 HTTP 连接升级为 WebSocket 连接
 var upgrader = websocket.Upgrader{
@@ -50,7 +46,7 @@ func nodeWebSocketHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// 将消息发送给客户端
-		nodeToWebChan <- Message{
+		nodeToWebChan <- models.Message{
 			MessageType: messageType,
 			Data:        message,
 		}
@@ -79,33 +75,4 @@ func webWSHandler(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
-}
-
-// StartWebSocketServer 启动 WebSocket 服务
-func StartWebSocketServer() {
-	// Node 节点服务
-	go func() {
-		// 注册 Node 节点 WebSocket 处理器
-		http.HandleFunc("/node", nodeWebSocketHandler)
-
-		// 启动 Node 节点 WebSocket 服务
-		nodePort := ":8080"
-		fmt.Println("Node WebSocket server started at ws://localhost" + nodePort + "/node")
-		if err := http.ListenAndServe(nodePort, nil); err != nil {
-			log.Println("Error starting Node WebSocket server:", err)
-		}
-	}()
-
-	// Web 前端服务
-	go func() {
-		// 注册 Web 服务 WebSocket 处理器
-		http.HandleFunc("/web", webWSHandler)
-
-		// 启动 Web 服务 WebSocket 服务
-		webPort := ":8081"
-		fmt.Println("Web WebSocket server started at ws://localhost" + webPort + "/web")
-		if err := http.ListenAndServe(webPort, nil); err != nil {
-			log.Println("Error starting Node WebSocket server:", err)
-		}
-	}()
 }

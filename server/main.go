@@ -2,17 +2,16 @@ package main
 
 import (
 	"LiveProbe/server/services"
-	"sync"
+	"embed"
 )
 
+// 将静态资源直接打包
+//
+//go:embed web
+var webContent embed.FS
+
 func main() {
-	var wg sync.WaitGroup
-	wg.Add(2)
 
-	go func() {
-		defer wg.Done()
-		services.StartWebSocketServer()
-	}()
+	services.ServerStart(webContent)
 
-	wg.Wait()
 }
